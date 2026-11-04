@@ -76,3 +76,30 @@ def post_detail(request: Request, post_id: int):
         name='detail.html',
         context={'post': post}
     )
+
+@app.get('/posts/{post_id}/edit')
+def post_edit(request: Request, post_id: int):
+    # SELECT * FROM posts WHERE post_id = 1;
+    post = posts[post_id]
+
+    return templates.TemplateResponse(
+        request=request,
+        name='edit.html',
+        context={'post': post}
+    )
+
+@app.post('/posts/{post_id}/update')
+def post_update(post_id: int, title: str = Form(), content: str = Form()):
+    # 기존 정보 찾기
+    old_post = posts[post_id]
+
+    # 새로운 정보로 수정하기
+    old_post['title'] = title
+    old_post['content'] = content
+
+    new_post = old_post
+
+    # 전체 데이터에 적용시키기
+    posts[post_id] = new_post
+
+    return RedirectResponse(f'/posts/{post_id}', status_code=303)
