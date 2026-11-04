@@ -33,3 +33,20 @@ def pong(count: int):
 @app.post('/pong')
 def pong_post(count: int = Form()):
     return {'result': count ** 2}
+
+
+# 전체 게시물 출력
+@app.get('/posts')
+def post_list(request: Request):
+    return templates.TemplateResponse(
+        request=request,
+        name='list.html',
+        context={'posts': list(posts.values())}
+    )
+
+
+
+# 하나의 게시물 출력
+@app.get('/posts/{post_id}')
+def post_detail():
+    pass
