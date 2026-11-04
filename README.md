@@ -10,5 +10,7 @@ code .
 uv add "fastapi[standard]"
 
 ```
-
-
+## run server
+```
+uv run fastapi dev
+```
