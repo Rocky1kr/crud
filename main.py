@@ -57,10 +57,8 @@ def post_new(request: Request):
 #사용자가 넘겨준 데이터를 저장
 @app.post('/posts/create')
 def post_create(title: str = Form(), content: str = Form()):
-    # return {'t': title, 'c': content}
-    new_id = max(posts.keys()) + 1
-    posts[3] = {'id': new_id, 'title': title, 'content': content}
-
+    new_id = max(posts.keys(), default=0) + 1
+    posts[new_id] = {'id': new_id, 'title': title, 'content': content}
     return RedirectResponse(f'/posts/{new_id}', status_code=303)
 
 
